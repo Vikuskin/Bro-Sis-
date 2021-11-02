@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { Button } from "../Style/Button";
+import { Context } from '../Functions/context';
+import { useContext } from 'react';
 
 const StyledButtons = styled.div`
   display: flex;
@@ -8,9 +10,22 @@ const StyledButtons = styled.div`
   margin: 30px;
 `;
 
-export const Buttons = () => (
-  <StyledButtons>
-    <Button>BRO!</Button>
-    <Button>SIS!</Button>
-  </StyledButtons>
-);
+export const Buttons = () => {
+  const { 
+    authGoogle,
+    authGit,
+    authFB
+  } = useContext(Context);
+
+  return (
+    <StyledButtons>
+      {authGoogle.authentication || authGit.authentication || authFB.authentication ?
+        <>
+          <Button>BRO!</Button>
+          <Button>SIS!</Button>
+        </> :
+        <>
+        </>}
+    </StyledButtons>
+  );
+}
