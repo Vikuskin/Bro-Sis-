@@ -50,7 +50,7 @@ const User = styled.div`
 `;
 const LogOut = styled.span`
   font-size: 18px;
-  font-weight: 700px;
+  font-weight: 700;
   cursor: pointer;
 `;
 const Figure = styled.figure`
@@ -86,9 +86,6 @@ export const NavBar = () => {
       return authFB.authentication.displayName
     }
   }
-  console.log(authGoogle.authentication);
-  console.log(authGit.authentication);
-  console.log(authFB.authentication);
 
   return (
   <NavBarStyled>
@@ -99,7 +96,7 @@ export const NavBar = () => {
     {authGoogle.authentication || authGit.authentication || authFB.authentication ?
       <User>
         <Figure>
-          <img src={loginImg}/>
+          <img src={loginImg} alt="Login"/>
           <figcaption>{nameSocial()}</figcaption>
         </Figure>
         <LogOut title="Выйти" onClick={logOutSoical}>X</LogOut>

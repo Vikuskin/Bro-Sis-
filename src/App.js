@@ -9,8 +9,9 @@ import { Context } from './Components/Functions/context';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { useAuth } from './Components/Hooks/useAuth';
-
-
+import 'firebase/compat/database'
+import { useDBBro } from './Components/Hooks/useDBBro';
+import { useDBSis } from './Components/Hooks/useDBSis';
 
 
 const firebaseConfig = {
@@ -21,7 +22,6 @@ const firebaseConfig = {
   messagingSenderId: "733953490548",
   appId: "1:733953490548:web:29432565599dbba0d15b21"
 };
-
 firebase.initializeApp(firebaseConfig);
 
 function App() {
@@ -32,16 +32,28 @@ function App() {
   const authGoogle = useAuth(authFirebase, providerGoogle);
   const authGit = useAuth(authFirebase, providerGit);
   const authFB = useAuth(authFirebase, providerFB);
+
+  const database = firebase.database();
+  const messagesBro = useDBBro(database);
+  const messagesSis = useDBSis(database);
+  
+  // console.log(sisLength);
   return (
       <Context.Provider value={{
         authGoogle,
         authGit,
-        authFB
-        }}>
+        authFB,
+        database: database,
+        messagesBro: messagesBro,
+        messagesSis: messagesSis
+      }}>
 
         <GlobalStyle/>
         <NavBar/>
-        <Statistics/>
+        {messagesBro && messagesSis ?
+        <Statistics/> :
+        <>
+        </>}
         <Buttons/>
       </Context.Provider>
   );

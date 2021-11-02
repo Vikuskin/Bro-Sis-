@@ -1,4 +1,6 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
+import { Context } from '../Functions/context';
+import { useContext } from 'react';
 
 const StatisticsStyled = styled.div`
   width: 100%;
@@ -14,10 +16,20 @@ const Sis = styled.span`
   padding: 15px;
 `;
 
-export const Statistics = () => (
+export const Statistics = () => {
+  const { 
+    messagesBro,
+    messagesSis
+  } = useContext(Context);
+  
+  const broLength = Object.keys(messagesBro).length;
+  const sisLength = Object.keys(messagesSis).length;
+
+  return (
   <StatisticsStyled>
     <div>Click's statistics:</div>
-    <Bro>10 000 Bro!</Bro>
-    <Sis>10 000 Sis!</Sis>
+    <Bro>{broLength} Bro!</Bro>
+    <Sis>{sisLength} Sis!</Sis>
   </StatisticsStyled>
 )
+}
