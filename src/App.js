@@ -12,8 +12,9 @@ import { useAuth } from './Components/Hooks/useAuth';
 import 'firebase/compat/database'
 import { useDBBro } from './Components/Hooks/useDBBro';
 import { useDBSis } from './Components/Hooks/useDBSis';
-
-
+import { lastMessage } from "./Components/Functions/functions";
+import { printLastMessage } from "./Components/Functions/functions";
+import { useDB } from "./Components/Hooks/useDB";
 const firebaseConfig = {
   apiKey: "AIzaSyD412OoK0uPA6YXy1mpcG0_YNGxRMxEwjM",
   authDomain: "bro-sis-e64f2.firebaseapp.com",
@@ -36,8 +37,31 @@ function App() {
   const database = firebase.database();
   const messagesBro = useDBBro(database);
   const messagesSis = useDBSis(database);
+  let lastMessageBro = {};
+  let lastMessageSis = {};
   
-  // console.log(sisLength);
+  const allMess = useDB(database);
+  console.log(allMess);
+
+
+  const click = () => {
+    document.addEventListener('click', (event) => {
+      const target = event.target;
+      if (target.textContent === "SIS!") {
+        lastMessageSis = lastMessage(messagesSis);
+        if (lastMessageSis != null) {
+          return printLastMessage(lastMessageSis);
+        }
+      }
+      if (target.textContent === "BRO!") {
+        lastMessageBro = lastMessage(messagesBro);
+        if (lastMessageBro != null) {
+          return printLastMessage(lastMessageBro);
+        }
+      }
+    })
+  }
+
   return (
       <Context.Provider value={{
         authGoogle,
@@ -45,15 +69,21 @@ function App() {
         authFB,
         database: database,
         messagesBro: messagesBro,
-        messagesSis: messagesSis
+        messagesSis: messagesSis,
+        lastMessageBro: lastMessageBro,
+        lastMessageSis: lastMessageSis
       }}>
-
+        {click()}
         <GlobalStyle/>
         <NavBar/>
         {messagesBro && messagesSis ?
-        <Statistics/> :
+        <>
+        <Statistics/>
+        </> :
         <>
         </>}
+        <p>Last message:</p>
+        <div></div>        
         <Buttons/>
       </Context.Provider>
   );

@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { Button } from "../Style/Button";
 import { Context } from '../Functions/context';
 import { useContext } from 'react';
+import { nameSocial } from "../Functions/functions";
+import { emailSocial } from "../Functions/functions";
 
 const StyledButtons = styled.div`
   display: flex;
@@ -15,25 +17,29 @@ export const Buttons = () => {
     authGoogle,
     authGit,
     authFB,
-    database
+    database,
   } = useContext(Context);
-    
+
   const sendBro = () => {
     const time = new Date();
-    const timeDate = `${time.getHours()}:${time.getMinutes()} ${time.getDate()}.${time.getMonth()}.${time.getFullYear()}`;  
+    const timeDate = `${time.getHours()}:${time.getMinutes()} ${time.getDate()}.${time.getMonth()}.${time.getFullYear()}`;
+    const name = nameSocial(authGoogle, authGit, authFB);
+    const email = emailSocial(authGoogle, authGit, authFB);  
     database.ref('messages/bro').push().set({
-      name: authGit.authentication.displayName,
-      email: authGit.authentication.email,
+      name: name,
+      email: email,
       text: 'Bro!',
       time: timeDate
-    })
+    });
   } 
   const sendSis = () => {
     const time = new Date();
     const timeDate = `${time.getHours()}:${time.getMinutes()} ${time.getDate()}.${time.getMonth()}.${time.getFullYear()}`;
+    const name = nameSocial(authGoogle, authGit, authFB);
+    const email = emailSocial(authGoogle, authGit, authFB); 
     database.ref('messages/sis').push().set({
-      name: authGit.authentication.displayName,
-      email: authGit.authentication.email,
+      name: name,
+      email: email,
       text: 'Sis!',
       time: timeDate
     })

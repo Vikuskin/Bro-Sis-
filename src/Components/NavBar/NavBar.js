@@ -7,6 +7,7 @@ import gitHubLogo from '../../image/gitHubLogo.png';
 import FBlogo from '../../image/FBlogo.jpg';
 import { Context } from '../Functions/context';
 import { useContext } from 'react';
+import { nameSocial } from '../Functions/functions';
 
 const NavBarStyled = styled.header`
   height: 100px;
@@ -77,16 +78,7 @@ export const NavBar = () => {
       authFB.logOut()
     }
   }
-  const nameSocial = () => {
-    if (authGoogle.authentication) {
-      return authGoogle.authentication.displayName
-    } else if (authGit.authentication) {
-      return authGit.authentication.displayName
-    } else {
-      return authFB.authentication.displayName
-    }
-  }
-
+  
   return (
   <NavBarStyled>
     <Logo>
@@ -97,7 +89,7 @@ export const NavBar = () => {
       <User>
         <Figure>
           <img src={loginImg} alt="Login"/>
-          <figcaption>{nameSocial()}</figcaption>
+          <figcaption>{nameSocial(authGoogle, authGit, authFB)}</figcaption>
         </Figure>
         <LogOut title="Выйти" onClick={logOutSoical}>X</LogOut>
       </User> :
