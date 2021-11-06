@@ -18,6 +18,8 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 20px;
     color: black;
     text-align: center;
+    width: 100%;
+    height: 100%;
   }
 
   figure {

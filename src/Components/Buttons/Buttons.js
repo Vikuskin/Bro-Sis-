@@ -4,6 +4,7 @@ import { Context } from '../Functions/context';
 import { useContext } from 'react';
 import { nameSocial } from "../Functions/functions";
 import { emailSocial } from "../Functions/functions";
+import { time } from "../Functions/functions";
 
 const StyledButtons = styled.div`
   display: flex;
@@ -21,27 +22,37 @@ export const Buttons = () => {
   } = useContext(Context);
 
   const sendBro = () => {
-    const time = new Date();
-    const timeDate = `${time.getHours()}:${time.getMinutes()} ${time.getDate()}.${time.getMonth()}.${time.getFullYear()}`;
+    const timeNow = time();
     const name = nameSocial(authGoogle, authGit, authFB);
     const email = emailSocial(authGoogle, authGit, authFB);  
     database.ref('messages/bro').push().set({
       name: name,
       email: email,
       text: 'Bro!',
-      time: timeDate
+      time: timeNow
     });
+    database.ref('messages/all').push().set({
+      name: name,
+      email: email,
+      text: 'Bro!',
+      time: timeNow
+    })
   } 
   const sendSis = () => {
-    const time = new Date();
-    const timeDate = `${time.getHours()}:${time.getMinutes()} ${time.getDate()}.${time.getMonth()}.${time.getFullYear()}`;
+    const timeNow = time();
     const name = nameSocial(authGoogle, authGit, authFB);
     const email = emailSocial(authGoogle, authGit, authFB); 
     database.ref('messages/sis').push().set({
       name: name,
       email: email,
       text: 'Sis!',
-      time: timeDate
+      time: timeNow
+    });
+    database.ref('messages/all').push().set({
+      name: name,
+      email: email,
+      text: 'Sis!',
+      time: timeNow
     })
   } 
 

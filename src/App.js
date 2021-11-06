@@ -15,6 +15,7 @@ import { useDBSis } from './Components/Hooks/useDBSis';
 import { lastMessage } from "./Components/Functions/functions";
 import { printLastMessage } from "./Components/Functions/functions";
 import { useDB } from "./Components/Hooks/useDB";
+
 const firebaseConfig = {
   apiKey: "AIzaSyD412OoK0uPA6YXy1mpcG0_YNGxRMxEwjM",
   authDomain: "bro-sis-e64f2.firebaseapp.com",
@@ -41,8 +42,6 @@ function App() {
   let lastMessageSis = {};
   
   const allMess = useDB(database);
-  console.log(allMess);
-
 
   const click = () => {
     document.addEventListener('click', (event) => {
@@ -50,13 +49,13 @@ function App() {
       if (target.textContent === "SIS!") {
         lastMessageSis = lastMessage(messagesSis);
         if (lastMessageSis != null) {
-          return printLastMessage(lastMessageSis);
+          printLastMessage(lastMessageSis);
         }
       }
       if (target.textContent === "BRO!") {
         lastMessageBro = lastMessage(messagesBro);
         if (lastMessageBro != null) {
-          return printLastMessage(lastMessageBro);
+          printLastMessage(lastMessageBro);
         }
       }
     })
@@ -77,13 +76,13 @@ function App() {
         <GlobalStyle/>
         <NavBar/>
         {messagesBro && messagesSis ?
-        <>
-        <Statistics/>
-        </> :
-        <>
-        </>}
-        <p>Last message:</p>
-        <div></div>        
+          <>
+          <Statistics/>
+          <p>Last message:</p>
+          <div>{printLastMessage(lastMessage(allMess))}</div>
+          </> :
+          <>
+          </>}
         <Buttons/>
       </Context.Provider>
   );
